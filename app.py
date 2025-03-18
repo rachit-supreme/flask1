@@ -1,9 +1,15 @@
 from flask import Flask,render_template,url_for,request,redirect
+from dotenv import load_dotenv
+import os
+from flask_cors import CORS
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 import logging
 
+load_dotenv()
 app = Flask(__name__)
+CORS(app)
+app.config['DEBUG'] = os.environ.get('FLASK_DEBUG')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 db = SQLAlchemy(app)
     
@@ -77,4 +83,4 @@ def update(id):
     else:
         return render_template('update.html',task=task)
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
